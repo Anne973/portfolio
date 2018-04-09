@@ -471,16 +471,7 @@ jQuery.fn.CSSAnimate=function(a,f,k,m,e){return this.each(function(){var b=jQuer
 		keyboard:function(el){
 			$(document).on("keydown.bgndGallery",function(e){
 				switch(e.keyCode){
-					case 32:
-						if(el.opt.paused){
-							$.mbBgndGallery.play(el);
-							el.opt.paused=false;
-						}else{
-							el.opt.paused=true;
-							$.mbBgndGallery.pause(el);
-						}
-						e.preventDefault();
-						break;
+
 					case 39:
 						$.mbBgndGallery.next(el);
 						e.preventDefault();

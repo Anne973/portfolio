@@ -20,7 +20,7 @@ class HomeController extends Controller
     /**
     * @Route("/", name="homepage")
     */
-    public function index(Request $request, \Swift_Mailer $mailer)
+    public function index(Request $request)
     {
         $form = $this->createForm(ContactType::class);
 
@@ -28,7 +28,8 @@ class HomeController extends Controller
 
         if($form ->isSubmitted() && $form->isValid()){
             $data=$form->getData();
-            $message= (new \Swift_Message('Contact to ADWEB973'))
+
+            /*$message= (new \Swift_Message('Contact to ADWEB973'))
             ->setFrom($data['email'])
             ->setTo('anne.derenoncourt@gmail.com')
             ->setBody(
@@ -38,7 +39,14 @@ class HomeController extends Controller
                 ),
                 'text/html'
             );
-            $mailer->send($message);
+            $mailer->send($message);*/
+            $to='anne.derenoncourt@gmail.com';
+            $subject=$data['subject'];
+            $message='<html><p>'.$data['message'].'</p><p>De : '.$data['name'].'</p><p>Email : '.$data['email'].'</p></html>';
+            $headers = 'MIME-Version:1.0' . "\r\n";
+            $headers .='Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            mail($to, $subject, $message, $headers);
+
             $this->addFlash('notice', 'Votre message a été envoyé. Merci!');
             return $this->redirectToRoute('homepage');
 
